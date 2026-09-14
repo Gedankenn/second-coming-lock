@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "id": "sabinho.lock",
-  "name": "My Lock Screen",
-  "version": "1.0.0",
-  "author": "Omarchy",
-  "description": "Quickshell session lock with separate password and fingerprint PAM flows.",
+  "name": "Second Coming Lock",
+  "version": "1.1.0",
+  "author": "sabinho",
+  "description": "Liturgical lock: weather, officium meters, Scripture, and Catholic plates.",
   "kinds": [
     "service"
   ],

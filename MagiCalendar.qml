@@ -1,6 +1,6 @@
 import QtQuick
 
-// Compact MAGI month grid. Used by the dashboard, lock screen, and clock popup.
+// Compact liturgical month grid. Used by the Second Coming lock screen.
 Item {
   id: root
 
@@ -9,12 +9,12 @@ Item {
   property int viewMonth: today.getMonth()
   property bool followToday: true
   property int weekStart: 1
-  property color paper: "#F4F0E6"
-  property color muted: "#9A8B7C"
-  property color accent: "#FF6A00"
-  property color blood: "#C41E3A"
-  property string displayFont: "Chakra Petch"
-  property string fontFamily: "Nimbus Sans Narrow"
+  property color paper: "#E8E0D0"
+  property color muted: "#8A8680"
+  property color accent: "#C4A35A"
+  property color blood: "#8B3A42"
+  property string displayFont: "Cinzel"
+  property string fontFamily: "Noto Serif"
   property bool interactive: true
   property int cellSize: 28
 
@@ -39,7 +39,7 @@ Item {
   }
 
   function weekdayLabel(day) {
-    return ["SU", "MO", "TU", "WE", "TH", "FR", "SA"][day]
+    return ["D", "S", "T", "Q", "Q", "S", "S"][day]
   }
 
   function monthGrid() {
@@ -165,9 +165,9 @@ Item {
             height: 14
             text: root.weekdayLabel(modelData)
             color: root.muted
-            font.family: root.displayFont
-            font.pixelSize: 9
-            font.letterSpacing: 0.8
+            font.family: root.fontFamily
+            font.pixelSize: 10
+            font.letterSpacing: 0
             font.weight: 600
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -186,16 +186,15 @@ Item {
               required property var modelData
               width: root.cellSize
               height: root.cellSize
-              color: modelData.today ? Qt.rgba(1, 0.42, 0, 0.16) : "transparent"
-              border.width: modelData.today ? 1 : 0
-              border.color: root.accent
+              color: modelData.today ? root.accent : "transparent"
+              border.width: 0
               Text {
                 anchors.centerIn: parent
                 text: modelData.day
                 color: modelData.today
-                  ? root.accent
+                  ? "#0c0a0d"
                   : (modelData.inMonth
-                    ? (modelData.weekend ? root.blood : root.paper)
+                    ? (modelData.weekend ? "#E0A090" : root.paper)
                     : Qt.rgba(0.96, 0.94, 0.9, 0.22))
                 font.family: root.fontFamily
                 font.pixelSize: 11
