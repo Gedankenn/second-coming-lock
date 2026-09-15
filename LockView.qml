@@ -178,14 +178,17 @@ Item {
   }
 
   function parseWeather(raw) {
-    var parts = String(raw || "").replace(/\r/g, "").split("|")
-    if (parts.length < 2) return
-    weatherEmoji = String(parts[0] || "").trim()
-    weatherTemp = String(parts[1] || "").trim().replace(/^\+/, "")
-    weatherCond = String(parts[2] || "").trim()
-    weatherHum = String(parts[3] || "").trim()
-    weatherWind = String(parts[4] || "").trim()
-    weatherPlace = String(parts[5] || "").trim()
+    try {
+      var data = JSON.parse(String(raw || ""))
+      var cur = data.current || {}
+      if (cur.temperature_2m === undefined) return
+      weatherTemp = Math.round(Number(cur.temperature_2m)) + "°C"
+      weatherHum = Math.round(Number(cur.relative_humidity_2m || 0)) + "%"
+      weatherWind = Math.round(Number(cur.wind_speed_10m || 0)) + " km/h"
+      var c = Number(cur.weather_code)
+      weatherCond = c === 0 ? "Clear" : c <= 3 ? "Cloudy" : c <= 48 ? "Fog" : c <= 67 ? "Rain" : c <= 77 ? "Snow" : c >= 95 ? "Thunder" : "Rain"
+      weatherPlace = "Pato Branco"
+    } catch (e) {}
   }
 
   function parseStats(raw) {
@@ -283,8 +286,8 @@ Item {
 
   Process {
     id: weatherProc
-    command: ["curl", "-fsS", "-A", "second-coming-lock", "--max-time", "6",
-      "https://wttr.in/" + (root.locationQuery ? encodeURIComponent(root.locationQuery) : "Pato+Branco") + "?format=%c|%t|%C|%h|%w|%l&m"]
+    command: ["curl", "-fsSL", "--max-time", "8",
+      "https://api.open-meteo.com/v1/forecast?latitude=-26.22861&longitude=-52.67056&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=America%2FSao_Paulo"]
     stdout: StdioCollector {
       waitForEnd: true
       onStreamFinished: root.parseWeather(text)

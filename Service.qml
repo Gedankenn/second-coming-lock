@@ -137,6 +137,8 @@ Item {
     armBlankTimer()
     logEvent("lock-requested")
     queueSessionLock()
+    if (!bellProc.running)
+      bellProc.running = true
 
     Qt.callLater(function() {
       root.refreshBackground()
@@ -366,6 +368,11 @@ Item {
     interval: 250
     repeat: false
     onTriggered: root.startFingerprint()
+  }
+
+  Process {
+    id: bellProc
+    command: ["paplay", "--volume=32768", root.home + "/.config/omarchy/plugins/sabinho.lock/assets/bell.ogg"]
   }
 
   Process {
