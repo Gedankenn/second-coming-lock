@@ -13,7 +13,7 @@ Second Coming lock screen for [Omarchy](https://omarchy.org): a [Quickshell](htt
   - current weather from the [Open-Meteo](https://open-meteo.com) API (temperature, humidity, wind). Coordinates and place name are hard-coded in `LockView.qml`.
   - MPRIS media player info
   - MAGI-style calendar and glyphs (`MagiCalendar.qml`, `MagiIcon.qml`, `MagiSeg.qml`, colors in `MagiTheme.qml`)
-- `assets/bell.ogg` sound asset.
+- Plays a bell (`assets/bell.ogg`) when the screen locks.
 
 ## Install
 
@@ -33,4 +33,4 @@ Disable the stock `omarchy.lock` if the two fight over the lock target.
 | `Service.qml` | Lock lifecycle, PAM password/fingerprint authentication |
 | `LockView.qml` | The lock-screen UI |
 | `Magi*.qml` | Calendar, icons, segment display and theme colors |
-| `assets/bell.ogg` | Bell sound |
+| `assets/bell.ogg` | Bell played on lock |
